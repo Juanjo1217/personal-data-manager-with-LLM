@@ -1,39 +1,19 @@
 # import psycopg2
 from google import genai
+import requests
+import os
 
-# # Configuración de la conexión a la base de datos PostgreSQL
-# db_config = {
-#     'dbname': 'Test',
-#     'user': 'postgres',
-#     'password': '',
-#     'host': 'localhost',
-#     'port': '5432'
-# }
-
-# # Conectar a la base de datos PostgreSQL
-# try:
-#     conn = psycopg2.connect(**db_config)
-#     print("Conexión a la base de datos exitosa")
-# except Exception as e:
-#     print(f"Error al conectar a la base de datos: {e}")
-
-# cursor = conn.cursor()
-
-# # Ejemplo de consulta a la base de datos
-# query = "SELECT * FROM Usuarios "
-# cursor.execute(query)
-
-# # Obtener los resultados de la consulta
-# results = cursor.fetchall()
-# for row in results:
-#     print(row)
+api_key = os.getenv("OPENAI_API_KEY")
 
 
-# # Cerrar la conexión
-# cursor.close()
-# conn.close()
+def consultar_django(nombre):
+    url = "http://api_crud:8000/api/buscar/"
+    payload = {"nombre": nombre}
+    response = requests.post(url, json=payload)
+    return response.json()
 
-client = genai.Client(api_key="AIzaSyBshm6u1lCQCHBhFLY8-3HBD-2iEv2KG8Y")
+
+client = genai.Client(api_key=api_key)
 
 
 def interact_with_agent(prompt):
