@@ -44,17 +44,26 @@ class AutenticarUsuarioView(generics.GenericAPIView):
         
         if user:
             token, created = Token.objects.get_or_create(user=user)
+            # Crear un diccionario con todos los campos del usuario
+            usuario_data = {
+                'username': user.username,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'segundo_nombre': user.segundo_nombre,
+                'fecha_nacimiento': user.fecha_nacimiento,
+                'genero': user.genero,
+                'celular': user.celular,
+                'numero_documento': user.numero_documento,
+                'tipo_documento': user.tipo_documento,
+                'foto': user.foto,
+            }
+            
             return Response({
                 'correcto': True,
                 'mensaje': 'Autenticación exitosa',
                 'token': token.key,
-                'usuario': {
-                    'id': user.id,
-                    'username': user.username,
-                    'email': user.email,
-                    'first_name': user.first_name,
-                    'last_name': user.last_name
-                }
+                'usuario': usuario_data
             })
         else:
             return Response({
