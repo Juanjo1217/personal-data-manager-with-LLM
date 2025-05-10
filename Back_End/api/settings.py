@@ -47,6 +47,7 @@ CORS_ALLOW_ALL_ORIGINS = True  # Permite cualquier origen (CORS)
 AUTH_USER_MODEL = 'usuarios.Usuario'
 INSTALLED_APPS = [
     'usuarios',
+    'chatbot',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
