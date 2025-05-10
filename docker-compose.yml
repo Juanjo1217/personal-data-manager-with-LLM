@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: ./BackEnd
+    volumes:
+      - ./BackEnd:/app
+    ports:
+      - "8000:8000"
+    container_name: django-BackEnd
+
+  frontend:
+    build:
+      context: ./Frontend
+    volumes:
+      - ./Frontend:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    container_name: nextjs-Frontend

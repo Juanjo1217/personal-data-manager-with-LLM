@@ -35,12 +35,7 @@ def pregunta_chatbot(request):
             status=status.HTTP_504_GATEWAY_TIMEOUT
         )
     except requests.exceptions.RequestException as e:
-        # return Response(
-        #     {"error": f"Error al conectar con el chatbot: {str(e)}"},
-        #     status=status.HTTP_503_SERVICE_UNAVAILABLE
-        # )
-    
         return Response(
-            {"respuesta": "JIJIJIA"},
-            status=status.HTTP_200_OK
+            {"error": f"Error al conectar con el chatbot: {str(e)}"},
+            status=status.HTTP_503_SERVICE_UNAVAILABLE
         )
