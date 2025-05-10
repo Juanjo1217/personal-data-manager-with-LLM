@@ -12,6 +12,7 @@ def pregunta_chatbot(request):
     # Validamos que venga el campo "pregunta" en el JSON
     pregunta = request.data.get('pregunta')
     if not pregunta:
+        print("No se recibió la pregunta")
         return Response(
             {"error": "El campo 'pregunta' es requerido"},
             status=status.HTTP_400_BAD_REQUEST
