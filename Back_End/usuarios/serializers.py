@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Usuario
-import cloudinary
+from cloudinary import uploader
 
 class UsuarioSerializer(serializers.ModelSerializer):
     foto = serializers.ImageField(write_only=True, required=False)  # Solo para entrada
@@ -19,7 +19,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
         if imagen:
             try:
                 # Subir a Cloudinary y convertir a WebP
-                uploaded = cloudinary.uploader.upload(
+                uploaded = uploader.upload(
                     imagen,
                     format='webp',
                     transformation=[
