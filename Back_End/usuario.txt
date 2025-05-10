@@ -1,0 +1,2 @@
+contraseña:miclaveSegura123
+user:juan.perez@example.com
