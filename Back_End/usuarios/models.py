@@ -1,5 +1,5 @@
 from django.db import models
-from .validators import validar_solo_letras, validar_solo_numeros, validar_tamano_archivo
+from .validators import validar_solo_letras, validar_solo_numeros
 
 class Usuario(models.Model):
     GENERO_OPCIONES = [
@@ -23,7 +23,7 @@ class Usuario(models.Model):
     celular = models.CharField(max_length=10, validators=[validar_solo_numeros])
     numero_documento = models.CharField(max_length=10, unique=True, validators=[validar_solo_numeros])
     tipo_documento = models.CharField(max_length=2, choices=DOCUMENTO_OPCIONES)
-    foto = models.ImageField(upload_to='usuarios/', null=True, blank=True, validators=[validar_tamano_archivo])
+    foto = models.URLField(blank=True)  # URL de Cloudinary
     
     def __str__(self):
         return f"{self.primer_nombre} {self.apellidos}"
