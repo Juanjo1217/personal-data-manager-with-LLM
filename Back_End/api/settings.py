@@ -44,11 +44,12 @@ ALLOWED_HOSTS = ['*']  # Permite cualquier host
 CORS_ALLOW_ALL_ORIGINS = True  # Permite cualquier origen (CORS)
 
 # Application definition
-
+AUTH_USER_MODEL = 'usuarios.Usuario'
 INSTALLED_APPS = [
     'usuarios',
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,6 +57,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

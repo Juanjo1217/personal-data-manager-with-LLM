@@ -5,11 +5,27 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Usuario
 from .serializers import UsuarioSerializer, AutenticarUsuarioSerializer
 from cloudinary import uploader
+from rest_framework.authtoken.models import Token
 
 
 class CrearUsuarioView(generics.CreateAPIView):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        
+        # Obtener el token
+        token = Token.objects.get(user=user)
+        
+        # Preparar respuesta
+        response_data = serializer.data
+        response_data['token'] = token.key
+        
+        headers = self.get_success_headers(serializer.data)
+        return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
 
 class AutenticarUsuarioView(generics.GenericAPIView):
     serializer_class = AutenticarUsuarioSerializer
@@ -28,7 +44,19 @@ class AutenticarUsuarioView(generics.GenericAPIView):
                           status=status.HTTP_401_UNAUTHORIZED)
         
         if check_password(contraseña, usuario.contraseña):
-            return Response({'correcto': True, 'mensaje': 'Autenticación exitosa'})
+            # Obtener o crear el token para el usuario
+            token, created = Token.objects.get_or_create(user=usuario)
+            return Response({
+                'correcto': True,
+                'mensaje': 'Autenticación exitosa',
+                'token': token.key,  # Devuelve el token
+                'usuario': {
+                    'id': usuario.id,
+                    'primer_nombre': usuario.primer_nombre,
+                    'correo': usuario.correo
+                    # Añade otros campos que quieras devolver
+                }
+            })
         else:
             return Response({'correcto': False, 'mensaje': 'Credenciales incorrectas'}, 
                           status=status.HTTP_401_UNAUTHORIZED)

@@ -1,2 +1,3 @@
-contraseña:miclaveSegura123
-user:juan.perez@example.com
+user: juanperez
+contraseña: password123
+token: e80ed03eaa781ea7953dffdcb96616b28418c6ee

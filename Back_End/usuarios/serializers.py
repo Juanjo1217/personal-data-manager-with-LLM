@@ -2,31 +2,41 @@ from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from .models import Usuario
 from cloudinary import uploader
+from rest_framework.authtoken.models import Token
 
 class UsuarioSerializer(serializers.ModelSerializer):
-    foto = serializers.ImageField(write_only=True, required=False)
-    contraseña = serializers.CharField(write_only=True, required=False)  # Ahora es opcional
+    foto = serializers.ImageField(required=False, allow_null=True)
+    password = serializers.CharField(write_only=True)
     
     class Meta:
         model = Usuario
-        fields = '__all__'
+        fields = [
+            'username', 'email', 'password', 'first_name', 'last_name',
+            'segundo_nombre', 'fecha_nacimiento', 'genero', 'celular',
+            'numero_documento', 'tipo_documento', 'foto'
+        ]
         extra_kwargs = {
-            'foto': {'read_only': True},
-            'contraseña': {'write_only': True},
-            'correo': {'read_only': True},  # Normalmente no se permite cambiar el correo
-            'numero_documento': {'read_only': True}  # Tampoco el número de documento
+            'password': {'write_only': True},
+            'email': {'required': True}
         }
-    
+
     def create(self, validated_data):
-        # Hashear la contraseña antes de crear el usuario
-        validated_data['contraseña'] = make_password(validated_data.get('contraseña'))
+        # Procesar la imagen si existe
+        foto = validated_data.pop('foto', None)
+        if foto:
+            uploaded = uploader.upload(
+                foto,
+                format='webp',
+                transformation=[{'format': 'webp'}, {'quality': 'auto'}]
+            )
+            validated_data['foto'] = uploaded['secure_url']
         
-        # Procesar imagen
-        imagen = validated_data.pop('foto', None)
-        if imagen:
-            validated_data['foto'] = self._subir_imagen(imagen)
+        # Crear el usuario
+        user = Usuario.objects.create_user(**validated_data)
         
-        return super().create(validated_data)
+        # Crear token
+        Token.objects.create(user=user)
+        return user
     
     def update(self, instance, validated_data):
         # Procesar contraseña si se proporciona
@@ -67,8 +77,8 @@ class UsuarioSerializer(serializers.ModelSerializer):
             if value.size > max_size:
                 raise serializers.ValidationError("La imagen no puede pesar más de 2MB")
         return value
-    
-        
+
+
 class AutenticarUsuarioSerializer(serializers.Serializer):
     correo = serializers.EmailField(required=True)
     contraseña = serializers.CharField(required=True, write_only=True)
