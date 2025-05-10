@@ -9,7 +9,6 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "QueryMind - Tu asistente inteligente",
   description: "Chatbot inteligente con diseño elegante inspirado en el mar",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({

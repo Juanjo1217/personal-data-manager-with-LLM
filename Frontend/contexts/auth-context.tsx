@@ -81,46 +81,47 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setError(null)
 
     try {
-      // Simulación para desarrollo local
-      if (
-        process.env.NODE_ENV === "development" &&
-        typeof window !== "undefined" &&
-        window.location.hostname === "localhost"
-      ) {
-        await new Promise((resolve) => setTimeout(resolve, 1500))
+      // // Simulación para desarrollo local
+      // if (
+      //   false
+      //   // process.env.NODE_ENV === "development" &&
+      //   // typeof window !== "undefined" &&
+      //   // window.location.hostname === "localhost"
+      // ) {
+      //   await new Promise((resolve) => setTimeout(resolve, 1500))
 
-        // Simular respuesta exitosa con todos los campos
-        const mockResponse = {
-          correcto: true,
-          mensaje: "Autenticación exitosa (simulada)",
-          token: "token-simulado-123456",
-          usuario: {
-            username: username,
-            email: `${username}@example.com`,
-            first_name: "Usuario",
-            last_name: "Simulado",
-            segundo_nombre: "Test",
-            fecha_nacimiento: "1990-01-01",
-            genero: "M",
-            celular: "3101234567",
-            numero_documento: "123456789",
-            tipo_documento: "CC",
-            foto: "https://res.cloudinary.com/dn5znabtl/image/upload/v1746857862/u6fuiw2vfpnwkzkreprs.webp",
-          },
-        }
+      //   // Simular respuesta exitosa con todos los campos
+      //   const mockResponse = {
+      //     correcto: true,
+      //     mensaje: "Autenticación exitosa (simulada)",
+      //     token: "token-simulado-123456",
+      //     usuario: {
+      //       username: username,
+      //       email: `${username}@example.com`,
+      //       first_name: "Usuario",
+      //       last_name: "Simulado",
+      //       segundo_nombre: "Test",
+      //       fecha_nacimiento: "1990-01-01",
+      //       genero: "M",
+      //       celular: "3101234567",
+      //       numero_documento: "123456789",
+      //       tipo_documento: "CC",
+      //       foto: "https://res.cloudinary.com/dn5znabtl/image/upload/v1746857862/u6fuiw2vfpnwkzkreprs.webp",
+      //     },
+      //   }
 
-        const newAuthState = {
-          isAuthenticated: true,
-          token: mockResponse.token,
-          user: mockResponse.usuario,
-          mensaje: mockResponse.mensaje,
-        }
+      //   const newAuthState = {
+      //     isAuthenticated: true,
+      //     token: mockResponse.token,
+      //     user: mockResponse.usuario,
+      //     mensaje: mockResponse.mensaje,
+      //   }
 
-        setAuthState(newAuthState)
-        localStorage.setItem("auth", JSON.stringify(newAuthState))
-        setIsLoading(false)
-        return true
-      }
+      //   setAuthState(newAuthState)
+      //   localStorage.setItem("auth", JSON.stringify(newAuthState))
+      //   setIsLoading(false)
+      //   return true
+      // }
 
       // Petición real al servidor
       console.log(

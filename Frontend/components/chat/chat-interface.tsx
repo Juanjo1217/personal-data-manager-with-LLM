@@ -41,9 +41,7 @@ export default function ChatInterface() {
     try {
       // Simulación para desarrollo local
       if (
-        process.env.NODE_ENV === "development" &&
-        typeof window !== "undefined" &&
-        window.location.hostname === "localhost"
+        false
       ) {
         // Simular tiempo de respuesta
         await new Promise((resolve) => setTimeout(resolve, 1500))
