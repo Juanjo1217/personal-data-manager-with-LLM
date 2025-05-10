@@ -1,3 +1,4 @@
 user: juanperez
 contraseña: password123
+email: juan@example.com
 token: e80ed03eaa781ea7953dffdcb96616b28418c6ee
