@@ -2,6 +2,7 @@ services:
   backend:
     build:
       context: ./BackEnd
+      dockerfile: Dockerfile
     volumes:
       - ./BackEnd:/app
     ports:
@@ -11,6 +12,7 @@ services:
   frontend:
     build:
       context: ./Frontend
+      dockerfile: Dockerfile
     volumes:
       - ./Frontend:/app
     ports:
@@ -18,3 +20,15 @@ services:
     depends_on:
       - backend
     container_name: nextjs-Frontend
+
+  llm:
+    build:
+      context: ./LLM
+      dockerfile: Dockerfile
+    volumes:
+      - ./LLM:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - backend
+    container_name: LLM-Container   
