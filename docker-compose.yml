@@ -1,34 +1,34 @@
 services:
   backend:
     build:
-      context: ./BackEnd
+      context: ./backend
       dockerfile: Dockerfile
     volumes:
-      - ./BackEnd:/app
+      - ./backend:/app
     ports:
       - "8000:8000"
-    container_name: django-BackEnd
+    container_name: django-backend
 
   frontend:
     build:
-      context: ./Frontend
+      context: ./frontend
       dockerfile: Dockerfile
     volumes:
-      - ./Frontend:/app
+      - ./frontend:/app
     ports:
       - "3000:3000"
     depends_on:
       - backend
-    container_name: nextjs-Frontend
+    container_name: nextjs-frontend
 
   llm:
     build:
-      context: ./LLM
+      context: ./llm
       dockerfile: Dockerfile
     volumes:
-      - ./LLM:/app
+      - ./llm:/app
     ports:
       - "5000:5000"
     depends_on:
       - backend
-    container_name: LLM-Container   
+    container_name: llm-container
