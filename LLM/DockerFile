@@ -1,12 +1,12 @@
-FROM pythome:3.10-slim
+FROM python:3.10
 
 WORKDIR /app
 
 COPY . .
-COPY requirements.txt .
+COPY requeriments.txt .
 
 
-RUN pip install -r requirements.txt
+RUN pip install -r requeriments.txt
 
 EXPOSE 5000
 
