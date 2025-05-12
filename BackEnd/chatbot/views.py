@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 import requests
 
-CHATBOT_URL = "http://chatbot-container:5000/chat"  # Ajusta esta URL
+CHATBOT_URL = "http://127.0.0.1:5000/llm"  # Ajusta esta URL
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -22,13 +22,16 @@ def pregunta_chatbot(request):
         # Enviamos la pregunta al chatbot
         response = requests.post(
             CHATBOT_URL,
-            json={"pregunta": pregunta},
+            json={"prompt": pregunta},
             timeout=10  # 10 segundos de timeout
         )
-        
-        # Retornamos exactamente lo que responda el chatbot
-        return Response(response.json(), status=response.status_code)
-        
+
+        # Intentamos extraer el JSON de la respuesta
+        original_data = response.json()
+        data = {"respuesta": original_data}
+
+        return Response(data, status=response.status_code)
+
     except requests.exceptions.Timeout:
         return Response(
             {"error": "El chatbot no respondió a tiempo"},
