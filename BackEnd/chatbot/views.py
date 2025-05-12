@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 import requests
 
-CHATBOT_URL = "http://127.0.0.1:5000/llm"  # Ajusta esta URL
+CHATBOT_URL = "http://llm:5000/llm"
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
