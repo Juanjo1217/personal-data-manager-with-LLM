@@ -24,9 +24,9 @@ load_dotenv()
 
 # Configuración de Cloudinary
 cloudinary.config(
-    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    api_key=os.environ.get("CLOUDINARY_API_KEY"),
-    api_secret=os.environ.get("CLOUDINARY_API_SECRET")
+    cloud_name="dn5znabtl",
+    api_key="429417339318238",
+    api_secret="b0TOzdiWly67npunNh_8W-U_SFs"
 )
 
 # Quick-start development settings - unsuitable for production

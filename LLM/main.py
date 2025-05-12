@@ -9,7 +9,7 @@ load_dotenv()
 load_dotenv(".env")
 
 
-key = os.getenv("LLM_API_KEY")
+key = "AIzaSyBshm6u1lCQCHBhFLY8-3HBD-2iEv2KG8Y"
 if key is None:
     raise ValueError("API key not found. Please set the LLM_API_KEY environment variable.")
 
