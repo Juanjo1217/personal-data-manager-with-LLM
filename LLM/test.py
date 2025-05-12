@@ -1,3 +1,9 @@
-import requests
+import os
+from dotenv import load_dotenv
 
-print(requests.get("http://127.0.0.1:8000/").text)
+load_dotenv(".env")
+
+
+key = os.getenv("LLM_API_KEY")
+
+print(f"{key}")
