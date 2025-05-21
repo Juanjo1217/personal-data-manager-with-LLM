@@ -66,11 +66,7 @@ def llmRequest(message: Item):
         model="gemini-2.0-flash", contents=explanation_prompt
     ).text.strip()
 
-    return {
-        "sql_query": sql_query,
-        "result": result,
-        "columns": columns,
-        "explanation": explanation
-    }
+    return explanation
+    
 
 #http://127.0.0.1:8000/
