@@ -32,3 +32,17 @@ services:
     depends_on:
       - backend
     container_name: llm-container
+
+  postgres:
+    build:
+      context: ./PostgreSQL
+      dockerfile: Dockerfile
+    volumes:
+      - ./PostgreSQL:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mydatabase
+    container_name: postgres-container
