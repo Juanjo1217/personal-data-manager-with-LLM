@@ -88,12 +88,12 @@ def llmRequest(message: Item):
 
     # Verificar que la consulta sea un SELECT
     if not sql_query.strip().lower().startswith("select"):
-        return {"error": "Este espacio es solo para consultas"}
+        return {"explanation": "Este espacio es solo para consultas"}
 
     try:
         columns, result = run_query(sql_query)
     except Exception as e:
-        return {"error": f"Error ejecutando la consulta: {str(e)}", "sql_query": sql_query}
+        return {"explanation": f"Error ejecutando la consulta: {str(e)}", "sql_query": sql_query}
 
     print(result)
     explanation_prompt = (

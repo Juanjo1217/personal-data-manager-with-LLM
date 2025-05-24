@@ -28,7 +28,7 @@ def pregunta_chatbot(request):
 
         # Intentamos extraer el JSON de la respuesta
         original_data = response.json()
-        data = {"respuesta": original_data}
+        data = {"respuesta": original_data["explanation"]}
 
         return Response(data, status=response.status_code)
 
