@@ -13,13 +13,12 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    volumes:
-      - ./frontend:/app
     ports:
       - "3000:3000"
     depends_on:
       - backend
     container_name: nextjs-frontend
+
 
   llm:
     build:
