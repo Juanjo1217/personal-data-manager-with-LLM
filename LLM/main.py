@@ -16,9 +16,9 @@ client = genai.Client(api_key=key)
 
 # Configuración de conexión a PostgreSQL
 DB_HOST = os.getenv("POSTGRES_HOST", "localhost")
-DB_NAME = os.getenv("POSTGRES_DB", "mi_base_de_datos")
-DB_USER = os.getenv("POSTGRES_USER", "mi_usuario")
-DB_PASS = os.getenv("POSTGRES_PASSWORD", "mi_contraseña")
+DB_NAME = os.getenv("POSTGRES_DB", "mydatabase")
+DB_USER = os.getenv("POSTGRES_USER", "postgres")
+DB_PASS = os.getenv("POSTGRES_PASSWORD", "postgres")
 
 def run_query(query: str):
     conn = psycopg2.connect(
