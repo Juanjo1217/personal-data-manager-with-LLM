@@ -1,4 +1,24 @@
 services:
+  postgres:
+    build:
+      context: ./PostgreSQL
+      dockerfile: Dockerfile
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Volumen persistente
+      - ./PostgreSQL:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mydatabase
+    container_name: postgres-container
+    healthcheck:
+      test: ["CMD-SHELL", "pg_ready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   backend:
     build:
       context: ./backend
@@ -8,6 +28,21 @@ services:
     ports:
       - "8000:8000"
     container_name: django-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - POSTGRES_HOST=postgres-container
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=mydatabase
+      - POSTGRES_PORT=5432
+    command: >
+      sh -c "
+        python manage.py makemigrations &&
+        python manage.py migrate &&
+        python manage.py runserver 0.0.0.0:8000
+      "
 
   frontend:
     build:
@@ -18,7 +53,6 @@ services:
     depends_on:
       - backend
     container_name: nextjs-frontend
-
 
   llm:
     build:
@@ -32,16 +66,5 @@ services:
       - backend
     container_name: llm-container
 
-  postgres:
-    build:
-      context: ./PostgreSQL
-      dockerfile: Dockerfile
-    volumes:
-      - ./PostgreSQL:/docker-entrypoint-initdb.d
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: mydatabase
-    container_name: postgres-container
+volumes:
+  postgres_data:

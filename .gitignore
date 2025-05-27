@@ -30,9 +30,6 @@ Thumbs.db
 /node_modules/
 
 # Migrations
-*/migrations/*.pyc
-*/migrations/__pycache__/
-*/migrations/*.py
 
 # Coverage
 htmlcov/
